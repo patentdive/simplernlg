@@ -4,7 +4,7 @@ Java::JavaLang::System.set_property "file.encoding","UTF-8"
 
 jardir = File.expand_path("../jars", __FILE__)
 Dir["#{jardir}/*.jar"].each  {|jar| require jar}
-module SimpleNLG
+module SimplerNLG
   %w(
     simplenlg.aggregation
     simplenlg.features
@@ -23,4 +23,4 @@ end
 %w(
   version
   nlg
-  ).each {|file| require "simplenlg/#{file}"}
+  ).each {|file| require_relative "simplernlg/#{file}"}

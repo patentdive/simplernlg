@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simplenlg (0.0.1-java)
+    simplernlg (0.0.1-java)
 
 GEM
   remote: https://rubygems.org/
@@ -19,8 +19,9 @@ GEM
 
 PLATFORMS
   java
+  ruby
 
 DEPENDENCIES
   rake
   rspec
-  simplenlg!
+  simplernlg!

@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-module SimpleNLG
+module SimplerNLG
   VERSION = "0.0.1"
 end

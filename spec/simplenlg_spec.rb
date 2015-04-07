@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-require "lib/simplenlg"
+require "lib/simplernlg"
 
-describe SimpleNLG::NLG do
+describe SimplerNLG::NLG do
   
-  nlg = SimpleNLG::NLG
+  nlg = SimplerNLG::NLG
   
   it "provide class method 'render'" do
     nlg.respond_to?(:render).should eq true
@@ -157,7 +157,7 @@ describe SimpleNLG::NLG do
   end
 
   it "allow subject modifiers from within an even worse notation" do
-    nlg.render{phrase(:s=>SimpleNLG::NLG::Container.new(:modifier,"Nepomuk","crazy"), :v=>"steal", :o=>"the money", :tense=>:past)}.should eq "Crazy Nepomuk stole the money."
+    nlg.render{phrase(:s=>SimplerNLG::NLG::Container.new(:modifier,"Nepomuk","crazy"), :v=>"steal", :o=>"the money", :tense=>:past)}.should eq "Crazy Nepomuk stole the money."
   end
 
   it "allow subject modifiers from within blocks" do

@@ -2,7 +2,9 @@
 
 ## Quick Overview
 
-This is a JRuby gem which you can use to generate grammatically correct English sentences from your data via an easy to use DSL. It is based on the java library [SimpleNLG](https://code.google.com/p/simplenlg) but does not yet expose all of the library's features. "NLG" stands for "Natural Language Generation" - but you should know that already - otherwise this is probably not the right gem for you.
+This is a JRuby gem which you can use to generate grammatically correct English sentences from your data via an easy to use DSL. It is based on the Java library [SimpleNLG](https://code.google.com/p/simplenlg) but does not yet expose all of the library's features. "NLG" stands for "Natural Language Generation" - but you should know that already - otherwise this is probably not the right gem for you.
+
+This is a light, friendly fork of [github.com/efi/simplenlg.git](github.com/efi/simplenlg.git). It's renamed SimplerNLG so the name doesn't conflict with the Java version and to reflect the Ruby pattern of putting an `r` into Ruby gem names.
 
 ## SimpleNLG
 
@@ -17,7 +19,7 @@ This gem is still in a too early development stage to be pushed to rubygems.org.
 
 If you are using Bundler (which you should be) just add the following to your Gemfile:
 ```ruby
-gem 'simplenlg', :git => 'https://github.com/efi/simplenlg.git'
+gem 'simplernlg', :git => 'https://github.com/jeremybmerrill/simplernlg.git'
 ```
 
 Alternatively you can just download the code and install the gem locally or (worst of all) just copy the code into your project (while adding license compliant credits).

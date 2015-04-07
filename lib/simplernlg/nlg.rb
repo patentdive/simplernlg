@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
-module SimpleNLG
+module SimplerNLG
 
   class NLG
 
     # use module's imported packages
-    def self.const_missing const ; SimpleNLG.const_missing const ; end
+    def self.const_missing const ; SimplerNLG.const_missing const ; end
 
     # optional value access helper
     def self.with value, &block ; block.call(value) if value ; end
