@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 require "lib/simplernlg"
 
+# `rspec spec/`
+
 describe SimplerNLG::NLG do
   
   nlg = SimplerNLG::NLG
@@ -146,6 +148,11 @@ describe SimplerNLG::NLG do
 
   it "accept multiple complements via 'c' shortcut and form past tense questions with them" do
     nlg.render(:s=>"Steven", :v=>"drink", :c=>["too much","too often"], :tense=>:past, :q=>:who_subject).should eq "Who drank too much too often?"
+  end
+
+  it "allows sophisticated (Tut. S. XI) prepositional phrases" do 
+    nlg.render(:s=>"Steven", :v=>"drink", :pp => SimplerNLG::NLG::Container.new(:modifier,"Nepomuk","crazy"), :tense=>:past, :q=>:who_subject).should eq "Who drank too much too often?"
+
   end
 
   it "allow subject modifiers" do

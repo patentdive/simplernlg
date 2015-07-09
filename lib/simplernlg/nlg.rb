@@ -1,6 +1,12 @@
 # -*- coding: UTF-8 -*-
 module SimplerNLG
 
+  # class Realiser
+  #   def realize_sentence(i)
+  #     realise_sentence(i)
+  #   end
+  # end
+
   class NLG
 
     # use module's imported packages
@@ -20,6 +26,17 @@ module SimplerNLG
     @@factory = NLGFactory.new @@lexicon
     @@realiser = Realiser.new @@lexicon
     # @@realiser.debug_mode = true
+
+    def self.factory
+      @@factory
+    end
+    def self.realiser
+      @@realiser
+    end
+
+    def self.realizer #,geez, the brits!
+      @@realiser
+    end
 
     # static hash accessor for convenience
     def self.[] *args, &block ;  self.render *args, &block ; end
@@ -108,8 +125,29 @@ module SimplerNLG
 
       # COMPLEMENT
       [input[:complement],input[:complements],input[:c]].flatten.each do |complement|
-        clause.add_complement complement.to_s # to_s added for method signature reasons...
+        if false # && complement.is_a?(Clause)
+
+          # ["in any year since 1992 when Atlantic tropical storm-related deaths ended in an odd number", "except 1996"] )
+
+
+          # np = @@factory.create_noun_phrase("1996"); # was nlgFactory, of type NPPhraseSpec
+          # pp = @@factory.createPrepositionPhrase(); # of type PPPhraseSpec 
+          # pp.add_complement(np);
+          # pp.set_preposition("since");
+          # clause.add_complement pp
+
+          # np_place = @@factory.create_noun_phrase("the", "park"); # was nlgFactory, of type NPPhraseSpec
+          # pp_place = @@factory.createPrepositionPhrase(); # of type PPPhraseSpec 
+          # pp_place.add_complement(np_place);
+          # pp_place.set_preposition("in");
+
+          clause.add_complement pp_place
+        else
+          clause.add_complement complement.to_s # to_s added for method signature reasons...
+        end
       end
+
+      with input[:pp]
 
       return clause
 
