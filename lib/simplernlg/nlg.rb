@@ -110,6 +110,7 @@ module SimplerNLG
         clause.set_feature Feature::TENSE, @@tenses[tense.to_sym]
       end
       with input[:nr] || input[:number] do |number|
+        number = number == 1 ? :singular : :plural if number.is_a? Fixnum
         @@number ||= Hash[:singular => NumberAgreement::SINGULAR, :plural => NumberAgreement::PLURAL, :both => NumberAgreement::BOTH]
         clause.set_feature Feature::NUMBER, @@number[number.to_sym]
       end
@@ -119,8 +120,14 @@ module SimplerNLG
       with input[:progressive] do |progressive|
         clause.set_feature Feature::PROGRESSIVE, progressive
       end
+      # with input[:prepositional_phrase] || input[:pp] do |pp|
+      #   clause
+      # end
+      with input[:modal] do |modal|
+        clause.set_feature Feature::MODAL, modal
+      end
 
-      #ALSO: ADJECTIVE_ORDERING AGGREGATE_AUXILIARY APPOSITIVE CUE_PHRASE FORM IS_COMPARATIVE IS_SUPERLATIVE MODAL PATTERN PARTICLE PERFECT PERSON POSSESSIVE PRONOMINAL RAISE_SPECIFIER SUPPRESS_GENITIVE_IN_GERUND SUPRESSED_COMPLEMENTISER
+      #ALSO: ADJECTIVE_ORDERING AGGREGATE_AUXILIARY APPOSITIVE CUE_PHRASE FORM IS_COMPARATIVE IS_SUPERLATIVE PATTERN PARTICLE PERFECT PERSON POSSESSIVE PRONOMINAL RAISE_SPECIFIER SUPPRESS_GENITIVE_IN_GERUND SUPRESSED_COMPLEMENTISER
       #ELIDED is pretty useless (if not dangerous! - NullPointerException in OrthographyProcessor.removePunctSpace())
 
       # COMPLEMENT
@@ -162,6 +169,7 @@ module SimplerNLG
           when :front     then mod_phrase.add_front_modifier modifier.to_s
           when :pre       then mod_phrase.add_pre_modifier   modifier.to_s
           when :post      then mod_phrase.add_post_modifier  modifier.to_s
+          # when :anymod    then mod.send(([:add_front_modifier, :add_pre_modifier, :add_post_modifier] - :TODO_ACTUAL_THING_TO_REMOVE ).sample, modifier.to_s)
           when :adjective then begin
             adjective = @@factory.create_adjective_phrase(modifier.to_s)
             with input[:comparative] || input[:comp] do |comparative|
