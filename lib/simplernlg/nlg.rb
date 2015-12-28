@@ -169,8 +169,6 @@ module SimplerNLG
         end
       end
 
-      with input[:pp]
-
       return clause
 
     end
