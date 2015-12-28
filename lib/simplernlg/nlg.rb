@@ -25,11 +25,12 @@ module SimplerNLG
     @@lexicon = XMLLexicon.new File.expand_path("../../res/default-lexicon.xml", __FILE__)
     @@factory = NLGFactory.new @@lexicon
     @@realiser = Realiser.new @@lexicon
-    # @@realiser.debug_mode = true
+    @@realiser.debug_mode = (ENV['SIMPLER_NLG_DEBUG'] ? true : false)
 
     def self.factory
       @@factory
     end
+    
     def self.realiser
       @@realiser
     end
@@ -105,24 +106,38 @@ module SimplerNLG
                                        :how_many             => InterrogativeType::HOW_MANY]
         clause.set_feature Feature::INTERROGATIVE_TYPE, @@interrogative_types[type.to_sym]
       end
+      
       with input[:t] || input[:tense] do |tense|
         @@tenses ||= Hash[:present => Tense::PRESENT, :past => Tense::PAST, :future => Tense::FUTURE]
         clause.set_feature Feature::TENSE, @@tenses[tense.to_sym]
       end
+      
       with input[:nr] || input[:number] do |number|
         number = number == 1 ? :singular : :plural if number.is_a? Fixnum
         @@number ||= Hash[:singular => NumberAgreement::SINGULAR, :plural => NumberAgreement::PLURAL, :both => NumberAgreement::BOTH]
         clause.set_feature Feature::NUMBER, @@number[number.to_sym]
       end
+      
       with input[:perfect] do |perfect|
         clause.set_feature Feature::PERFECT, perfect
       end
+      
       with input[:progressive] do |progressive|
         clause.set_feature Feature::PROGRESSIVE, progressive
       end
-      # with input[:prepositional_phrase] || input[:pp] do |pp|
-      #   clause
-      # end
+      
+      with input[:prepositional_phrase] || input[:pp] do |pp|
+        if pp.is_a? Array
+          prep = pp[0]
+          target = pp[1]
+        elsif pp.is_a? Hash
+          prep = pp[:prep]
+          target = pp[:target]
+        end
+        pp = @@factory.createPrepositionPhrase(prep, target);
+        clause.add_complement(pp)
+      end
+
       with input[:modal] do |modal|
         clause.set_feature Feature::MODAL, modal
       end
